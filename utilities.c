@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "minitalk.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdbool.h>
+bool	ft_isvalid(char *str)
+{
+	int count;
 
-# include "ft_printf.h"
-# include "libft.h"
-
-bool	ft_isvalid(char *str);
-
-#endif
+	count =0 ;
+	while(str && str[count])
+	{
+		if(!ft_isdigit(str[count]))
+			return (false);
+		count++;
+	}
+	return (true);
+}

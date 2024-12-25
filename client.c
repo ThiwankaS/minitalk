@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   client.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,18 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINITALK_H
-# define MINITALK_H
+#include "minitalk.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdbool.h>
+int main(int argc, char *argv[])
+{
+	int		pid;
+	char	*str;
 
-# include "ft_printf.h"
-# include "libft.h"
-
-bool	ft_isvalid(char *str);
-
-#endif
+	if(argc != 3)
+	{
+		ft_printf("Invalid format : ./client <PID> <string>\n");
+		return (0);
+	}
+	if(!ft_isvalid(argv[2]))
+	{
+		ft_printf("PID contains invalid characters!\n");
+		return (0);
+	}
+	pid = ft_atoi(argv[2]);
+	str = argv[1];
+	ft_printf("PID : %d\n", pid);
+	ft_printf("String : %s\n", str);
+	return (0);
+}
