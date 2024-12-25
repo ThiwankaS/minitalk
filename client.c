@@ -12,23 +12,24 @@
 
 #include "minitalk.h"
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	int		pid;
 	char	*str;
 
-	if(argc != 3)
+	if (argc != 3)
 	{
 		ft_printf("Invalid format : ./client <PID> <string>\n");
 		return (0);
 	}
-	if(!ft_isvalid(argv[2]))
+	if (!ft_isvalid(argv[2]))
 	{
 		ft_printf("PID contains invalid characters!\n");
 		return (0);
 	}
 	pid = ft_atoi(argv[2]);
 	str = argv[1];
+	kill(pid, SIGUSR2);
 	ft_printf("PID : %d\n", pid);
 	ft_printf("String : %s\n", str);
 	return (0);

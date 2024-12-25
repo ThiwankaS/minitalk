@@ -14,12 +14,12 @@
 
 bool	ft_isvalid(char *str)
 {
-	int count;
+	int	count;
 
-	count =0 ;
-	while(str && str[count])
+	count = 0;
+	while (str && str[count])
 	{
-		if(!ft_isdigit(str[count]))
+		if (!ft_isdigit(str[count]))
 			return (false);
 		count++;
 	}
