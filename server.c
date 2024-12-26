@@ -6,11 +6,11 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:54:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2024/12/26 17:46:56 by tsomacha         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:59:55 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define _POSIX_C_SOURCE 200809L
+//#define _POSIX_C_SOURCE 200809L
 #include "minitalk.h"
 
 unsigned char	ft_decode(char *str)
