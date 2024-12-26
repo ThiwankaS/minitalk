@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 08:56:13 by tsomacha          #+#    #+#             */
-/*   Updated: 2024/11/28 13:43:08 by tsomacha         ###   ########.fr       */
+/*   Updated: 2024/12/26 17:33:26 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 int	ft_printchar(int c)
 {
 	return (write(1, &c, 1));
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	count;
-
-	count = 0;
-	while (*(s + count))
-	{
-		count++;
-	}
-	return (count);
 }
 
 int	ft_printstr(char *str)
