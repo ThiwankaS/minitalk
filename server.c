@@ -17,14 +17,17 @@ unsigned char	ft_decode(char *str)
 {
 	int				count;
 	int				result;
+	int				value;
 	unsigned char	mask;
 
-	count = 7;
+	count = WORD_SIZE - 1;
+	mask = MASK_DEC;
+	value = 0;
 	result = 0;
-	mask = 0x01;
 	while (count >= 0)
 	{
-		result = result + ((str[count] - '0') * (mask << (7 - count)));
+		value = ((str[count] - '0') * (mask << ((WORD_SIZE - 1) - count)));
+		result = result + value;
 		count--;
 	}
 	return ((unsigned char)result);
@@ -32,7 +35,7 @@ unsigned char	ft_decode(char *str)
 
 void	handle_signal(int signum)
 {
-	char			buffer[8];
+	char			buffer[WORD_SIZE];
 	static int		count;
 	unsigned char	ch;
 	static char		*str;
@@ -44,7 +47,7 @@ void	handle_signal(int signum)
 	else if (signum == SIGUSR2)
 		buffer[count] = '1';
 	count++;
-	if (count == 8)
+	if (count == WORD_SIZE)
 	{
 		ch = ft_decode(buffer);
 		str = ft_straddchar(str, ch);

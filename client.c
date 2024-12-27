@@ -19,11 +19,11 @@ char	*ft_encode(unsigned char c)
 	unsigned char	mask;
 
 	count = 0;
-	mask = 0x80;
-	result = malloc(8 * sizeof(char));
+	mask = MASK_ENC;
+	result = malloc(WORD_SIZE * sizeof(char));
 	if (!result)
 		return (NULL);
-	while (count < 8)
+	while (count < WORD_SIZE)
 	{
 		if (c & mask)
 			result[count] = '1';
@@ -40,7 +40,7 @@ void	ft_sendnull(char *str, int pid)
 	int	count;
 
 	count = 0;
-	while (count < 8)
+	while (count < WORD_SIZE)
 	{
 		if (str[count] - '0' == 0)
 			kill(pid, SIGUSR1);
@@ -62,7 +62,7 @@ void	ft_sendmessage(char *str, int pid)
 	{
 		msg = ft_encode(str[count]);
 		step = 0;
-		while (step < 8)
+		while (step < WORD_SIZE)
 		{
 			if (msg[step] - '0' == 0)
 				kill(pid, SIGUSR1);
