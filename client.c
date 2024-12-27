@@ -87,13 +87,13 @@ int	main(int argc, char *argv[])
 		ft_printf("Invalid format : ./client <PID> <string>\n");
 		return (0);
 	}
-	if (!ft_isvalid(argv[2]))
+	if (!ft_isvalid(argv[1]))
 	{
 		ft_printf("PID contains invalid characters!\n");
 		return (0);
 	}
-	pid = ft_atoi(argv[2]);
-	str = argv[1];
+	pid = ft_atoi(argv[1]);
+	str = argv[2];
 	ft_sendmessage(str, pid);
 	return (0);
 }
