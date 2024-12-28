@@ -1,4 +1,4 @@
-CMD = gcc
+CMD = cc
 CFLAGS = -Wall -Wextra -Werror -I.
 
 
