@@ -26,7 +26,7 @@ bool	ft_isvalid(char *str)
 	return (true);
 }
 
-char	*ft_straddchar(char *str, char ch)
+char	*ft_straddchar(volatile char *str, char ch)
 {
 	char	*buffer;
 	int		length;
@@ -48,6 +48,6 @@ char	*ft_straddchar(char *str, char ch)
 	buffer[count] = ch;
 	buffer[count + 1] = '\0';
 	if (str)
-		free(str);
+		str = NULL;
 	return (buffer);
 }

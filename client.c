@@ -46,7 +46,7 @@ void	ft_sendnull(char *str, int pid)
 			kill(pid, SIGUSR1);
 		if (str[count] - '0' == 1)
 			kill(pid, SIGUSR2);
-		usleep(100);
+		usleep(1500);
 		count++;
 	}
 }
@@ -68,7 +68,7 @@ void	ft_sendmessage(char *str, int pid)
 				kill(pid, SIGUSR1);
 			if (msg[step] - '0' == 1)
 				kill(pid, SIGUSR2);
-			usleep(100);
+			usleep(750);
 			step++;
 		}
 		free(msg);

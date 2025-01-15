@@ -13,6 +13,8 @@
 //#define _POSIX_C_SOURCE 200809L
 #include "minitalk.h"
 
+volatile char *g_str;
+
 unsigned char	ft_decode(char *str)
 {
 	int				count;
@@ -38,10 +40,9 @@ void	handle_signal(int signum)
 	char			buffer[WORD_SIZE];
 	static int		count;
 	unsigned char	ch;
-	static char		*str;
 
-	if (!str)
-		str = ft_strdup("");
+	if (!g_str)
+		g_str = ft_strdup("");
 	if (signum == SIGUSR1)
 		buffer[count] = '0';
 	else if (signum == SIGUSR2)
@@ -50,11 +51,11 @@ void	handle_signal(int signum)
 	if (count == WORD_SIZE)
 	{
 		ch = ft_decode(buffer);
-		str = ft_straddchar(str, ch);
+		g_str = ft_straddchar(g_str, ch);
 		if (ch == '\0')
 		{
-			ft_printf("%s\n", str);
-			str = NULL;
+			ft_printf("%s\n", g_str);
+			g_str = NULL;
 		}
 		count = 0;
 	}

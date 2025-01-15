@@ -26,6 +26,6 @@
 # include "libft.h"
 
 bool	ft_isvalid(char *str);
-char	*ft_straddchar(char *str, char ch);
+char	*ft_straddchar(volatile char *str, char ch);
 
 #endif
