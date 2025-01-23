@@ -19,7 +19,6 @@ void	handle_signal(int sig, siginfo_t *info, void *context)
 	static int	step;
 
 	(void)context;
-	step = 0;
 	if (sig == SIGUSR1)
 		g_signal_data |= (0 << step);
 	else if (sig == SIGUSR2)
@@ -44,6 +43,7 @@ int	main(void)
 
 	pid = getpid();
 	ft_printf("Server PID: %d\n", pid);
+	ft_printf("waiting message from the client...\n");
 	sa.sa_sigaction = handle_signal;
 	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
