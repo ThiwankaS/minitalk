@@ -6,78 +6,49 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:54:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2024/12/26 17:59:55 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/01/22 17:00:19 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#define _POSIX_C_SOURCE 200809L
 #include "minitalk.h"
 
-volatile char *g_str;
+static volatile unsigned char	g_signal_data = 0;
 
-unsigned char	ft_decode(char *str)
+void	handle_signal(int sig, siginfo_t *info, void *context)
 {
-	int				count;
-	int				result;
-	int				value;
-	unsigned char	mask;
+	static int	step;
 
-	count = WORD_SIZE - 1;
-	mask = MASK_DEC;
-	value = 0;
-	result = 0;
-	while (count >= 0)
+	(void)context;
+	step = 0;
+	if (sig == SIGUSR1)
+		g_signal_data |= (0 << step);
+	else if (sig == SIGUSR2)
+		g_signal_data |= (1 << step);
+	step++;
+	if (step == 8)
 	{
-		value = ((str[count] - '0') * (mask << ((WORD_SIZE - 1) - count)));
-		result = result + value;
-		count--;
+		if (g_signal_data == '\0')
+			write(1, "\n", 1);
+		else
+			write(1, (const void *)&g_signal_data, 1);
+		g_signal_data = 0;
+		step = 0;
 	}
-	return ((unsigned char)result);
-}
-
-void	handle_signal(int signum)
-{
-	char			buffer[WORD_SIZE];
-	static int		count;
-	unsigned char	ch;
-
-	if (!g_str)
-		g_str = ft_strdup("");
-	if (signum == SIGUSR1)
-		buffer[count] = '0';
-	else if (signum == SIGUSR2)
-		buffer[count] = '1';
-	count++;
-	if (count == WORD_SIZE)
-	{
-		ch = ft_decode(buffer);
-		g_str = ft_straddchar(g_str, ch);
-		if (ch == '\0')
-		{
-			ft_printf("%s\n", g_str);
-			g_str = NULL;
-		}
-		count = 0;
-	}
+	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
 {
-	int					pid;
+	pid_t				pid;
 	struct sigaction	sa;
 
-	sa.sa_flags = 0;
-	sa.sa_handler = handle_signal;
-	sigemptyset(&sa.sa_mask);
-	sigaddset(&sa.sa_mask, SIGINT);
+	pid = getpid();
+	ft_printf("Server PID: %d\n", pid);
+	sa.sa_sigaction = handle_signal;
+	sa.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
-	pid = getpid();
-	ft_printf("PID : [%d]\n", pid);
-	ft_printf("waiting message from the client...\n");
 	while (1)
-	{
 		pause();
-	}
 	return (0);
 }
