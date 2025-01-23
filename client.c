@@ -6,7 +6,7 @@
 /*   By: tsomacha <tsomacha@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:54:02 by tsomacha          #+#    #+#             */
-/*   Updated: 2025/01/22 17:02:43 by tsomacha         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:24:29 by tsomacha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	response_handler(int signum)
 		g_received = 1;
 }
 
+void	ft_error(void)
+{
+	ft_printf("Message sending failed : Invalid PID!\n");
+	exit(0);
+}
+
 void	ft_encode(pid_t pid, char c)
 {
 	int	count;
@@ -29,9 +35,15 @@ void	ft_encode(pid_t pid, char c)
 	{
 		g_received = 0;
 		if ((c >> count) & 1)
-			kill(pid, SIGUSR2);
+		{
+			if (kill(pid, SIGUSR2) < 0)
+				ft_error();
+		}
 		else
-			kill(pid, SIGUSR1);
+		{
+			if (kill(pid, SIGUSR1) < 0)
+				ft_error();
+		}
 		while (!g_received)
 			pause();
 		count++;
